@@ -28,7 +28,7 @@ public class TranService {
         return tranMapper.getTranByYear(year, type, sort);
     }
 
-    int addTran(Transaction transaction) {
+    public int addTran(Transaction transaction) {
         tranMapper.insertTransaction(transaction);
         return transaction.getId();
     }

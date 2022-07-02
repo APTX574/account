@@ -11,13 +11,29 @@ import java.util.Objects;
 public class Transaction {
     int id;
     int userId;
-    BigDecimal account;
-    int type;
-    int sort;
+    double account;
+    String type;
+    String sort;
     int year;
     int month;
     int day;
+    String beizhu;
+    String location;
+    String way;
     Date createTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return id == that.id && userId == that.userId && Double.compare(that.account, account) == 0 && type == that.type && sort == that.sort && year == that.year && month == that.month && day == that.day && Objects.equals(beizhu, that.beizhu) && Objects.equals(location, that.location) && Objects.equals(way, that.way) && Objects.equals(createTime, that.createTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, account, type, sort, year, month, day, beizhu, location, way, createTime);
+    }
 
     @Override
     public String toString() {
@@ -26,109 +42,112 @@ public class Transaction {
                 ", userId=" + userId +
                 ", account=" + account +
                 ", type=" + type +
-                ", sort='" + sort + '\'' +
+                ", sort=" + sort +
                 ", year=" + year +
-                ", mount=" + month +
+                ", month=" + month +
                 ", day=" + day +
+                ", beizhu='" + beizhu + '\'' +
+                ", location='" + location + '\'' +
+                ", way='" + way + '\'' +
                 ", createTime=" + createTime +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Transaction that = (Transaction) o;
-        return id == that.id && userId == that.userId && type == that.type && year == that.year && month == that.month && day == that.day && Objects.equals(account, that.account) && Objects.equals(sort, that.sort) && Objects.equals(createTime, that.createTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, account, type, sort, year, month, day, createTime);
     }
 
     public int getId() {
         return id;
     }
 
-    public Transaction setId(int id) {
+    public void setId(int id) {
         this.id = id;
-        return this;
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public Transaction setUserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
-        return this;
     }
 
-    public BigDecimal getAccount() {
+    public double getAccount() {
         return account;
     }
 
-    public Transaction setAccount(BigDecimal account) {
+    public void setAccount(double account) {
         this.account = account;
-        return this;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public Transaction setType(int type) {
+    public void setType(String type) {
         this.type = type;
-        return this;
     }
 
-    public int getSort() {
+    public String getSort() {
         return sort;
     }
 
-    public Transaction setSort(int sort) {
+    public void setSort(String sort) {
         this.sort = sort;
-        return this;
     }
 
     public int getYear() {
         return year;
     }
 
-    public Transaction setYear(int year) {
+    public void setYear(int year) {
         this.year = year;
-        return this;
     }
 
     public int getMonth() {
         return month;
     }
 
-    public Transaction setMonth(int month) {
+    public void setMonth(int month) {
         this.month = month;
-        return this;
     }
 
     public int getDay() {
         return day;
     }
 
-    public Transaction setDay(int day) {
+    public void setDay(int day) {
         this.day = day;
-        return this;
+    }
+
+    public String getBeizhu() {
+        return beizhu;
+    }
+
+    public void setBeizhu(String beizhu) {
+        this.beizhu = beizhu;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getWay() {
+        return way;
+    }
+
+    public void setWay(String way) {
+        this.way = way;
     }
 
     public Date getCreateTime() {
         return createTime;
     }
 
-    public Transaction setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-        return this;
     }
+
 }
+

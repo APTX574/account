@@ -2,19 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.web.account.dao.TranMapper">
     <insert id="insertTransaction" keyProperty="id">
-        insert into transaction(user_id, account, type, sort, year, month, day, create_time)
-        values (#{userId}, #{account}, #{type}, #{sort}, #{year}, #{mount}, #{day}, #{createTime})
+        insert into transaction(user_id, account, type, sort, year, month, day, create_time,beizhu,location,way)
+        values (#{userId}, #{account}, #{type}, #{sort}, #{year}, #{month}, #{day}, #{createTime},#{beizhu},#{location},#{way})
     </insert>
     <select id="getTranByYear" resultType="com.web.account.entity.Transaction">
-        select id,
-        user_id,
-        account,
-        type,
-        sort,
-        year,
-        month,
-        day,
-        create_time
+        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
         from transaction
         where year = #{year}
         <if test="type!=-1">and type=#{type}</if>
@@ -22,15 +14,7 @@
         order by create_time desc
     </select>
     <select id="getTranByMonth" resultType="com.web.account.entity.Transaction">
-        select id,
-        user_id,
-        account,
-        type,
-        sort,
-        year,
-        month,
-        day,
-        create_time
+        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
         from transaction
         where year = #{year}
         and month = #{month}
@@ -39,15 +23,7 @@
         order by create_time desc
     </select>
     <select id="getTranByDay" resultType="com.web.account.entity.Transaction">
-        select id,
-        user_id,
-        account,
-        type,
-        sort,
-        year,
-        month,
-        day,
-        create_time
+        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
         from transaction
         where year = #{year}
         and month = #{month}
@@ -57,15 +33,7 @@
         order by create_time desc
     </select>
     <select id="getTranByType" resultType="com.web.account.entity.Transaction">
-        select id,
-        user_id,
-        account,
-        type,
-        sort,
-        year,
-        month,
-        day,
-        create_time
+        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
         from transaction
         <if test="type!=-1">and type=#{type}</if>
         <if test="sort!=-1">and sort =#{sort}</if>
