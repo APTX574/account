@@ -13,19 +13,24 @@ import java.util.List;
  */
 @Service
 public class TranService {
+
     @Autowired
     TranMapper tranMapper;
 
-    List<Transaction> getTranByDate(int year, int month, int day, int type, int sort) {
+    List<Transaction> getTranByDate(int year, int month, int day, String type, String sort) {
         return tranMapper.getTranByDay(year, month, day, type, sort);
     }
 
-    List<Transaction> getTranByDate(int year, int month, int type, int sort) {
+    List<Transaction> getTranByDate(int year, int month, String type, String sort) {
         return tranMapper.getTranByMonth(year, month, type, sort);
     }
 
-    List<Transaction> getTranByDate(int year, int type, int sort) {
+    List<Transaction> getTranByDate(int year, String type, String sort) {
         return tranMapper.getTranByYear(year, type, sort);
+    }
+
+    public List<Transaction> getTran(Transaction transaction,int tp) {
+        return tranMapper.getTran(transaction,tp);
     }
 
     public int addTran(Transaction transaction) {

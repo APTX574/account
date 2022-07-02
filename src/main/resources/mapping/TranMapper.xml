@@ -39,4 +39,9 @@
         <if test="sort!=-1">and sort =#{sort}</if>
         order by create_time desc
     </select>
+    <select id="getTran" resultType="com.web.account.entity.Transaction">
+        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
+        from transaction
+        where user_id = #{tp};
+    </select>
 </mapper>

@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author aptx
@@ -48,6 +49,7 @@ public class TranController {
         int month= Integer.parseInt(split[1]);
         int day= Integer.parseInt(split[2]);
 
+
         Transaction newtrans = new Transaction();
         newtrans.setAccount(account);
         newtrans.setType(type);
@@ -59,6 +61,7 @@ public class TranController {
         newtrans.setYear(year);
         newtrans.setMonth(month);
         newtrans.setDay(day);
+        newtrans.setUserId(0);
         int result = tranService.addTran(newtrans);
         if(result >= 1){
             return "添加成功！";
@@ -87,6 +90,7 @@ public class TranController {
         int month= Integer.parseInt(split[1]);
         int day= Integer.parseInt(split[2]);
 
+
         Transaction newtrans = new Transaction();
         newtrans.setAccount(account);
         newtrans.setType(type);
@@ -97,6 +101,7 @@ public class TranController {
         newtrans.setYear(year);
         newtrans.setMonth(month);
         newtrans.setDay(day);
+        newtrans.setUserId(1);
 
         int result = tranService.addTran(newtrans);
         if(result >= 1){
@@ -106,5 +111,19 @@ public class TranController {
         }
     }
 
+    @RequestMapping(value = "/get/output", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Transaction>getoutput( Transaction transaction ){
 
+        return tranService.getTran(transaction,0);
+
+    }
+
+    @RequestMapping(value = "/get/income", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Transaction> getincome( Transaction transaction ){
+
+        return tranService.getTran(transaction,1);
+
+    }
 }
