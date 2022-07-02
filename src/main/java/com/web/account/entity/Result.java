@@ -1,4 +1,4 @@
-package cn.knowledge.base;
+package com.web.account.entity;
 
 import com.alibaba.fastjson.JSONObject;
 

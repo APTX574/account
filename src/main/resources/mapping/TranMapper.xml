@@ -1,4 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.web.account.dao.TranMapper" >
+<mapper namespace="com.web.account.dao.TranMapper">
+    <insert id="insertTransaction" keyProperty="id">
+        insert into transaction(user_id, account, type, sort, year, month, day, create_time)
+        values (#{userId}, #{account}, #{type}, #{sort}, #{year}, #{mount}, #{day}, #{createTime})
+    </insert>
+    <select id="getTranByYear" resultType="com.web.account.entity.Transaction">
+        select id,
+        user_id,
+        account,
+        type,
+        sort,
+        year,
+        month,
+        day,
+        create_time
+        from transaction
+        where year = #{year}
+        <if test="type!=-1">and type=#{type}</if>
+        <if test="sort!=-1">and sort =#{sort}</if>
+        order by create_time desc
+    </select>
+    <select id="getTranByMonth" resultType="com.web.account.entity.Transaction">
+        select id,
+        user_id,
+        account,
+        type,
+        sort,
+        year,
+        month,
+        day,
+        create_time
+        from transaction
+        where year = #{year}
+        and month = #{month}
+        <if test="type!=-1">and type=#{type}</if>
+        <if test="sort!=-1">and sort =#{sort}</if>
+        order by create_time desc
+    </select>
+    <select id="getTranByDay" resultType="com.web.account.entity.Transaction">
+        select id,
+        user_id,
+        account,
+        type,
+        sort,
+        year,
+        month,
+        day,
+        create_time
+        from transaction
+        where year = #{year}
+        and month = #{month}
+        and day = #{day}
+        <if test="type!=-1">and type=#{type}</if>
+        <if test="sort!=-1">and sort =#{sort}</if>
+        order by create_time desc
+    </select>
+    <select id="getTranByType" resultType="com.web.account.entity.Transaction">
+        select id,
+        user_id,
+        account,
+        type,
+        sort,
+        year,
+        month,
+        day,
+        create_time
+        from transaction
+        <if test="type!=-1">and type=#{type}</if>
+        <if test="sort!=-1">and sort =#{sort}</if>
+        order by create_time desc
+    </select>
 </mapper>
