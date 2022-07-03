@@ -7,10 +7,7 @@ import com.web.account.service.TranService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +20,7 @@ import java.util.List;
  * @date 2022/07/01 11:32
  */
 @Controller
+@CrossOrigin
 public class TranController {
 
     @Autowired

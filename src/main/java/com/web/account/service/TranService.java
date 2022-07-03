@@ -38,4 +38,8 @@ public class TranService {
         return transaction.getId();
     }
 
+    public double sumin(Transaction transaction){
+        return 0.0;
+    }
+
 }
