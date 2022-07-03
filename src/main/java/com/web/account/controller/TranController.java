@@ -130,9 +130,9 @@ public class TranController {
     public String sumin() {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> map1 = new HashMap<>();
-        map.put("value", tranService.sumin(0));
+        map.put("value", String.format("%.2f",tranService.sumin(0)));
         map.put("name","支出总金额");
-        map1.put("value", tranService.sumout(1));
+        map1.put("value", String.format("%.2f",tranService.sumout(1)));
         map1.put("name","收入总金额");
         List<Map<String, Object>> list = new ArrayList<>();
         list.add(map);
