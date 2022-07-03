@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author aptx
@@ -28,11 +26,12 @@ public class TranController {
 
     @RequestMapping(value = "/insert/outcome", method = RequestMethod.POST)
     @ResponseBody
-    public String insertoutcome(@RequestBody String body){
+    public String insertoutcome(@RequestBody String body) {
 
         JSONObject jsonObject = JSONObject.parseObject(body);
         double account = jsonObject.getDouble("account");
-        String type = jsonObject.getString("type"); ;
+        String type = jsonObject.getString("type");
+        ;
         String sort = jsonObject.getString("subtype");
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
@@ -44,8 +43,8 @@ public class TranController {
         String format = bf.format(date);
         String[] split = format.split("-");
         int year = Integer.parseInt(split[0]);
-        int month= Integer.parseInt(split[1]);
-        int day= Integer.parseInt(split[2]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
 
 
         Transaction newtrans = new Transaction();
@@ -61,20 +60,21 @@ public class TranController {
         newtrans.setDay(day);
         newtrans.setUserId(0);
         int result = tranService.addTran(newtrans);
-        if(result >= 1){
+        if (result >= 1) {
             return "添加成功！";
-        }else{
+        } else {
             return "添加失败！";
         }
     }
 
     @RequestMapping(value = "/insert/income", method = RequestMethod.POST)
     @ResponseBody
-    public String insertincome(@RequestBody String body){
+    public String insertincome(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
 
         double account = jsonObject.getDouble("account");
-        String type = jsonObject.getString("type"); ;
+        String type = jsonObject.getString("type");
+        ;
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
@@ -85,8 +85,8 @@ public class TranController {
         String format = bf.format(date);
         String[] split = format.split("-");
         int year = Integer.parseInt(split[0]);
-        int month= Integer.parseInt(split[1]);
-        int day= Integer.parseInt(split[2]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
 
 
         Transaction newtrans = new Transaction();
@@ -102,42 +102,43 @@ public class TranController {
         newtrans.setUserId(1);
 
         int result = tranService.addTran(newtrans);
-        if(result >= 1){
+        if (result >= 1) {
             return "添加成功！";
-        }else{
+        } else {
             return "添加失败！";
         }
     }
 
     @RequestMapping(value = "/get/output", method = RequestMethod.POST)
     @ResponseBody
-    public List<Transaction>getoutput( Transaction transaction ){
+    public List<Transaction> getoutput(Transaction transaction) {
 
-        return tranService.getTran(transaction,0);
+        return tranService.getTran(transaction, 0);
 
     }
 
     @RequestMapping(value = "/get/income", method = RequestMethod.POST)
     @ResponseBody
-    public List<Transaction> getincome( Transaction transaction ){
+    public List<Transaction> getincome(Transaction transaction) {
 
-        return tranService.getTran(transaction,1);
+        return tranService.getTran(transaction, 1);
 
     }
 
-    @RequestMapping(value = "/get/sumin", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/sum", method = RequestMethod.POST)
     @ResponseBody
-    public double sumin(double in){
-
-        return tranService.sumin(in);
+    public String sumin() {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map.put("value", tranService.sumin(0));
+        map.put("name","支出总金额");
+        map1.put("value", tranService.sumout(1));
+        map1.put("name","收入总金额");
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return Result.newSuccessfulResult(list);
 
     }
 
-    @RequestMapping(value = "/get/sumout", method = RequestMethod.POST)
-    @ResponseBody
-    public double sumout(double out){
-
-        return tranService.sumout(out);
-
-    }
 }
