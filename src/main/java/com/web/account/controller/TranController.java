@@ -124,4 +124,20 @@ public class TranController {
         return tranService.getTran(transaction,1);
 
     }
+
+    @RequestMapping(value = "/get/sumin", method = RequestMethod.POST)
+    @ResponseBody
+    public double sumin(double in){
+
+        return tranService.sumin(in);
+
+    }
+
+    @RequestMapping(value = "/get/sumout", method = RequestMethod.POST)
+    @ResponseBody
+    public double sumout(double out){
+
+        return tranService.sumout(out);
+
+    }
 }

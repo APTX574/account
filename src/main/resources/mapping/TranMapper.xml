@@ -51,11 +51,11 @@
         where user_id = #{tp};
     </select>
 
-    <select id="sumin" resultType="com.web.account.entity.Transaction">
+    <select id="sumin" resultType="double">
         select sum(account) from transaction where user_id = 1
     </select>
 
-    <select id="sumout" resultType="com.web.account.entity.Transaction">
+    <select id="sumout" resultType="double">
         select sum(account) from transaction where user_id = 0
     </select>
 

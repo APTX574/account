@@ -23,6 +23,6 @@ public interface TranMapper {
 
     List<Transaction> getTran(Transaction transaction,int tp);
 
-    void sumin(double in);
-    void  sumout(double out);
+    double sumin(double in);
+    double  sumout(double out);
 }
