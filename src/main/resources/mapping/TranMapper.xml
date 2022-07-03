@@ -66,5 +66,10 @@
         delete from transaction
         where id = #{id};
     </select>
+    
+    <update id="updateTran">
+        update transaction set user_id=#{userId}, account=#{account}, type=#{type}, sort=#{sort}, year=#{year}, month=#{month}, day=#{day}, create_time=#{createTime}, beizhu=#{beizhu}, way=#{way}, location=#{location}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>

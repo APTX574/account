@@ -48,4 +48,7 @@ public class TranService {
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }
+    public  int updateTran(Transaction transaction){
+        return tranMapper.updateTran(transaction);
+    }
 }

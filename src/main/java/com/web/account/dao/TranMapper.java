@@ -24,7 +24,7 @@ public interface TranMapper {
     List<Transaction> getTran(Transaction transaction,int tp);
 
     Integer deleteTran(int id);
-
+    int updateTran(Transaction transaction);
     double sumin(double in);
     double  sumout(double out);
 }
