@@ -44,4 +44,8 @@ public class TranService {
     public double sumout(double out){
         return tranMapper.sumout(out);
     }
+
+    public Integer deleteTran(int id) {
+        return tranMapper.deleteTran(id);
+    }
 }

@@ -48,15 +48,23 @@
     <select id="getTran" resultType="com.web.account.entity.Transaction">
         select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
         from transaction
-        where user_id = #{tp};
+        where user_id = #{tp}
+        order by create_time desc
     </select>
 
     <select id="sumin" resultType="double">
         select sum(account) from transaction where user_id = 1
+
     </select>
 
     <select id="sumout" resultType="double">
         select sum(account) from transaction where user_id = 0
+
+    </select>
+
+    <select id="deleteTran" resultType="Integer">
+        delete from transaction
+        where id = #{id};
     </select>
 
 </mapper>
