@@ -25,6 +25,7 @@ import java.util.jar.JarEntry;
 public class UserController {
     @Autowired
     UserMapper userMapper;
+    @Autowired
     TranMapper tranMapper;
 
     @ResponseBody
@@ -56,15 +57,39 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/setmonthlimit")
-    public String monthlimit(@RequestBody double monthlimit) {
+    public String monthlimit(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        Double monthlimit = jsonObject.getDouble("monthlimit");
+        if(monthlimit == null){
+            monthlimit = 0.0;
+        }
         userMapper.monthlimit(monthlimit);
-        return Result.newSuccessfulResult("1");
+        return Result.newSuccessfulResult(1);
     }
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/setyearlimit")
-    public String yearlimit(@RequestBody double yearlimit) {
+    public String yearlimit(@RequestBody String body) {
+        System.out.println(body);
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        Double yearlimit = jsonObject.getDouble("yearlimit");
+        System.out.println(yearlimit);
+        if(yearlimit == null){
+            yearlimit = 0.0;
+        }
         userMapper.yearlimit(yearlimit);
-        return Result.newSuccessfulResult("2");
+        return Result.newSuccessfulResult(1);
+    }
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, path = "/monthlimit")
+    public String monthlimit1() {
+        userMapper.getmonthlimit();
+        return Result.newSuccessfulResult(userMapper.getmonthlimit());
+    }
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, path = "/yearlimit")
+    public String yearlimit1() {
+        userMapper.getyearlimit();
+        return Result.newSuccessfulResult(userMapper.getyearlimit());
     }
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/leftmonthlimit")

@@ -300,11 +300,11 @@ public class TranController {
         Date end = jsonObject.getDate("end");
         Boolean isOut = jsonObject.getBoolean("is_out");
         int id = 0;
-        if (!isOut) {
+        if (isOut==null||!isOut) {
             id = 1;
         }
         Boolean outDtl = jsonObject.getBoolean("out_dtl");
-        if (outDtl) {
+        if (outDtl!=null&&outDtl) {
             JSONArray checkList = jsonObject.getJSONArray("checkList");
             String[] sorts = new String[checkList.size()];
             for (int i = 0; i < checkList.size(); i++) {

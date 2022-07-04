@@ -12,8 +12,8 @@ public interface UserMapper {
     int addUser(User user);
     User getUserById(int id);
     User getUserByName(String username);
-    double monthlimit(double ml);
-    double yearlimit(double ml);
+    int monthlimit(double ml);
+    int yearlimit(double ml);
 
     Double getyearlimit();
     Double getmonthlimit();

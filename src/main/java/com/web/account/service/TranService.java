@@ -111,6 +111,7 @@ public class TranService {
     public List<Map<String, Object>> getPie(Date start, Date end, int userId) {
         List<Map<String, Object>> ans = new ArrayList<>();
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        assert start!=null&&end!=null;
         String format = bf.format(start);
         String[] split = format.split("-");
         int s_y = Integer.parseInt(split[0]);
