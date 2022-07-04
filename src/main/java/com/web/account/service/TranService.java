@@ -66,7 +66,44 @@ public class TranService {
         map.put("sum", list);
         return map;
     }
+    public Map<String, Object> getPie(int year,int month,int day,int userId){
+        if(userId == 0) {
+            String[]  strs = {"餐饮消费", "购物消费", "生活消费", "出行消费", "大件消费", "其他消费"};
 
+            Map<String, Object> map = new HashMap<>();
+            List<Double> list = new ArrayList<>();
+            List<String> list1 = new ArrayList<>();
+            for (String str : strs) {
+                Double daySum = tranMapper.getPie(str, year, month, day, userId);
+                if (daySum == null) {
+                    daySum = 0.0;
+                }
+                list.add(daySum);
+                list1.add(str);
+            }
+            map.put("type", list1);
+            map.put("sum", list);
+            return map;
+        }
+        else {
+            String[]  strs = {"工资","红包","借贷","退款","转账","提现","理财","其他"};
+
+            Map<String, Object> map = new HashMap<>();
+            List<Double> list = new ArrayList<>();
+            List<String> list1 = new ArrayList<>();
+            for (String str : strs) {
+                Double daySum = tranMapper.getPie(str, year, month, day, userId);
+                if (daySum == null) {
+                    daySum = 0.0;
+                }
+                list.add(daySum);
+                list1.add(str);
+            }
+            map.put("type", list1);
+            map.put("sum", list);
+            return map;
+        }
+    }
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }

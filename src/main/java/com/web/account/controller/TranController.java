@@ -249,4 +249,17 @@ public class TranController {
         return Result.newSuccessfulResult(daySum);
     }
 
+    @RequestMapping(value = "/get/type/sum", method = RequestMethod.POST)
+    @ResponseBody
+    public String getPie(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        System.out.println(body);
+        Integer userId = jsonObject.getInteger("userId");
+        Integer year = jsonObject.getInteger("year");
+        Integer month = jsonObject.getInteger("month");
+        Integer day = jsonObject.getInteger("day");
+        Map<String, Object> daySum = tranService.getPie(year, month, day,userId);
+        return Result.newSuccessfulResult(daySum);
+    }
+
 }

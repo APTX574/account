@@ -98,6 +98,15 @@
           and day=#{day}
             and user_id=#{userId}
     </select>
+    <select id="getPie" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+          and month = #{month}
+          and day=#{day}
+          and user_id=#{userId}
+            and type = #{type}
+    </select>
 
     <update id="updateTran">
         update transaction
