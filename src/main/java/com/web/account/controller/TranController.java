@@ -1,6 +1,7 @@
 package com.web.account.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.web.account.entity.Result;
 import com.web.account.entity.Transaction;
@@ -35,7 +36,7 @@ public class TranController {
 
         String fileName = URLEncoder.encode("transaction", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(),Transaction.class).sheet("transaction").doWrite(tranService.getAll());
+        EasyExcel.write(response.getOutputStream(), Transaction.class).sheet("transaction").doWrite(tranService.getAll());
     }
 
     @RequestMapping(value = "/insert/outcome", method = RequestMethod.POST)
@@ -177,12 +178,12 @@ public class TranController {
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
-        Date createTime = new Date();
         int id = jsonObject.getInteger("id");
         int userID = jsonObject.getInteger("userId");
-        Date date = jsonObject.getDate("time");
+        Date date = jsonObject.getDate("createTime");
         if (date == null) {
             date = new Date();
+            System.out.printf("date is null");
         }
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
@@ -205,7 +206,6 @@ public class TranController {
         newtrans.setUserId(userID);
         newtrans.setId(id);
         newtrans.setSort(sort);
-
         int result = tranService.updateTran(newtrans);
         return Result.newSuccessfulResult("更新成功");
     }
@@ -286,8 +286,44 @@ public class TranController {
         Integer month = jsonObject.getInteger("month");
         Integer day = jsonObject.getInteger("day");
         String type = jsonObject.getString("type");
-        List<Map<String, Object>> pie = tranService.getPieSon(year, month, day, userId,type);
+        List<Map<String, Object>> pie = tranService.getPieSon(year, month, day, userId, type);
         return Result.newSuccessfulResult(pie);
     }
 
+    @RequestMapping(value = "/get/pie", method = RequestMethod.POST)
+    @ResponseBody
+    public String getPiePie(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        System.out.println(body);
+        Date start = jsonObject.getDate("start");
+        Date end = jsonObject.getDate("end");
+        Boolean isOut = jsonObject.getBoolean("is_out");
+        int id = 0;
+        if (!isOut) {
+            id = 1;
+        }
+        Boolean outDtl = jsonObject.getBoolean("out_dtl");
+        if (outDtl) {
+            JSONArray checkList = jsonObject.getJSONArray("checkList");
+            String[] sorts = new String[checkList.size()];
+            for (int i = 0; i < checkList.size(); i++) {
+                sorts[i] = String.valueOf(checkList.get(i));
+            }
+
+            List<Map<String, Object>> pie1 = tranService.getPieSon(start, end, id, sorts[0]);
+            List<Map<String, Object>> pie2;
+            for (int i = 1; i < sorts.length; i++) {
+                pie2 = tranService.getPieSon(start, end, id, sorts[i]);
+                List<Map<String, Object>> add = tranService.add(pie1, pie2);
+                pie1.clear();
+                pie1.addAll(add);
+                System.out.println(add);
+
+            }
+            return Result.newSuccessfulResult(pie1);
+
+        }
+        List<Map<String, Object>> pie = tranService.getPie(start, end, id);
+        return Result.newSuccessfulResult(pie);
+    }
 }
