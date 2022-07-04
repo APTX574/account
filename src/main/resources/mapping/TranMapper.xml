@@ -64,6 +64,22 @@
         order by create_time desc
     </select>
 
+    <select id="getAll" resultType="com.web.account.entity.Transaction">
+        select
+               user_id,
+               account,
+               type,
+               sort,
+               year,
+               month,
+               day,
+               create_time,
+               beizhu,
+               way,
+               location
+        from transaction
+    </select>
+
     <select id="sumin" resultType="double">
         select sum(account)
         from transaction

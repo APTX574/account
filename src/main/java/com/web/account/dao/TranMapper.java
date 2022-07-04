@@ -24,10 +24,12 @@ public interface TranMapper {
 
     List<Transaction> getTran(Transaction transaction,int tp);
 
+    List<Transaction> getAll();
+
     Double getDaySum(int year,int  month, int day,int userId );
 
     Double getPie(String type,int year,int month,int day,int userId);
-    Double getPieSon(String type,int year,int month,int day,int userId);
+    Double getPieSon(String type,int year,int month,int day,int userId,String sort);
 
     Integer deleteTran(int id);
     int updateTran(Transaction transaction);

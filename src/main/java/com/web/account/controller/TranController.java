@@ -1,14 +1,17 @@
 package com.web.account.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSONObject;
 import com.web.account.entity.Result;
 import com.web.account.entity.Transaction;
 import com.web.account.service.TranService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -23,6 +26,16 @@ public class TranController {
 
     @Autowired
     TranService tranService;
+
+    @GetMapping("/download")
+    public void download(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+
+        String fileName = URLEncoder.encode("transaction", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(),Transaction.class).sheet("transaction").doWrite(tranService.getAll());
+    }
 
     @RequestMapping(value = "/insert/outcome", method = RequestMethod.POST)
     @ResponseBody
@@ -39,6 +52,7 @@ public class TranController {
         Date createTime = new Date();
 
         Date date = jsonObject.getDate("time");
+        System.out.println(date);
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
         String[] split = format.split("-");
@@ -53,7 +67,7 @@ public class TranController {
         newtrans.setLocation(location);
         newtrans.setWay(way);
         newtrans.setBeizhu(beizhu);
-        newtrans.setCreateTime(createTime);
+        newtrans.setCreateTime(date);
         newtrans.setSort(sort);
         newtrans.setYear(year);
         newtrans.setMonth(month);
@@ -77,7 +91,6 @@ public class TranController {
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
-        Date createTime = new Date();
 
         Date date = jsonObject.getDate("time");
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
@@ -94,7 +107,7 @@ public class TranController {
         newtrans.setLocation(location);
         newtrans.setWay(way);
         newtrans.setBeizhu(beizhu);
-        newtrans.setCreateTime(createTime);
+        newtrans.setCreateTime(date);
         newtrans.setYear(year);
         newtrans.setMonth(month);
         newtrans.setDay(day);
@@ -155,10 +168,10 @@ public class TranController {
     @ResponseBody
     public String update(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
-        System.out.println(body);
 
         double account = jsonObject.getDouble("account");
         String type = jsonObject.getString("type");
+        String sort = jsonObject.getString("sort");
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
@@ -183,12 +196,13 @@ public class TranController {
         newtrans.setLocation(location);
         newtrans.setWay(way);
         newtrans.setBeizhu(beizhu);
-        newtrans.setCreateTime(createTime);
+        newtrans.setCreateTime(date);
         newtrans.setYear(year);
         newtrans.setMonth(month);
         newtrans.setDay(day);
         newtrans.setUserId(userID);
         newtrans.setId(id);
+        newtrans.setSort(sort);
 
         int result = tranService.updateTran(newtrans);
         return Result.newSuccessfulResult("更新成功");
@@ -226,7 +240,7 @@ public class TranController {
         newtrans.setLocation(location);
         newtrans.setWay(way);
         newtrans.setBeizhu(beizhu);
-        newtrans.setCreateTime(createTime);
+        newtrans.setCreateTime(date);
         newtrans.setYear(year);
         newtrans.setMonth(month);
         newtrans.setDay(day);

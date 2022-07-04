@@ -34,6 +34,10 @@ public class TranService {
         return tranMapper.getTran(transaction, tp);
     }
 
+    public List<Transaction> getAll() {
+        return tranMapper.getAll();
+    }
+
     public int addTran(Transaction transaction) {
         tranMapper.insertTransaction(transaction);
         return transaction.getId();
@@ -115,9 +119,9 @@ public class TranService {
             Double daySum;
 
             if (day == -1) {
-                daySum = getDoubSon(year, month, userId, str);
+                daySum = getDoubSon(type,year, month, userId, str);
             } else {
-                daySum = tranMapper.getPieSon(str, year, month, day, userId);
+                daySum = tranMapper.getPieSon(type, year, month, day, userId,str);
             }
             if (daySum == null) {
                 daySum = 0.0;
@@ -148,10 +152,10 @@ public class TranService {
         return sum;
     }
 
-    public double getDoubSon(int year, int month, int userId, String type) {
+    public double getDoubSon(String type,int year, int month, int userId, String sort) {
         Double sum = 0.0;
         for (int i = 1; i < 31; i++) {
-            Double pie = tranMapper.getPieSon(type, year, month, i, userId);
+            Double pie = tranMapper.getPieSon(type, year, month, i, userId,sort);
             if (pie == null) {
                 pie = 0.0;
             }
