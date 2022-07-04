@@ -109,6 +109,17 @@
     </select>
 
 
+    <select id="getPieSon" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+          and month = #{month}
+          and day=#{day}
+          and user_id=#{userId}
+          and type = #{type}
+            and sort = #{sort}
+    </select>
+
     <update id="updateTran">
         update transaction
         set user_id=#{userId},
@@ -124,8 +135,6 @@
             location=#{location}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="gePie">
 
-    </update>
 
 </mapper>

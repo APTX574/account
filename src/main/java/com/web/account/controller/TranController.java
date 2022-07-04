@@ -253,12 +253,24 @@ public class TranController {
     @ResponseBody
     public String getPie(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
-        System.out.println(body);
         Integer userId = jsonObject.getInteger("userId");
         Integer year = jsonObject.getInteger("year");
         Integer month = jsonObject.getInteger("month");
         Integer day = jsonObject.getInteger("day");
         List<Map<String, Object>> pie = tranService.getPie(year, month, day, userId);
+        return Result.newSuccessfulResult(pie);
+    }
+
+    @RequestMapping(value = "/get/typeson/sum", method = RequestMethod.POST)
+    @ResponseBody
+    public String getPieSon(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        Integer userId = jsonObject.getInteger("userId");
+        Integer year = jsonObject.getInteger("year");
+        Integer month = jsonObject.getInteger("month");
+        Integer day = jsonObject.getInteger("day");
+        String type = jsonObject.getString("type");
+        List<Map<String, Object>> pie = tranService.getPieSon(year, month, day, userId,type);
         return Result.newSuccessfulResult(pie);
     }
 

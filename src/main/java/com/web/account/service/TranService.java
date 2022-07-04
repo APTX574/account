@@ -73,7 +73,6 @@ public class TranService {
         } else {
             strs = strs2;
         }
-        System.out.println(Arrays.toString(strs));
         List<Map<String, Object>> list = new ArrayList<>();
         for (String str : strs) {
             Map<String, Object> map1 = new HashMap<>();
@@ -92,10 +91,43 @@ public class TranService {
             list.add(map1);
         }
         return list;
-
-
     }
+    public List<Map<String, Object>> getPieSon(int year, int month, int day, int userId,String type) {
+        String[] strs1 = {"个人就餐","外卖","零食","饮料","请客","其他"};
+        String[] strs2 = {"服饰装扮","日用百货","家居用品","数码电器","母婴用品","宠物用品","其他"};
+        String[] strs3 ={"运动健身","美容美发","住房物业","汽车保养","酒店旅游","书籍教育","音乐影视","医疗健康","文娱休闲","充值消费","其他"};
+        String[] strs4= {"公共交通","汽车加油","机票","船票","景区门票","其他"};
+        String[] strs5 ={"购房","购车","其他"};
+        String[] strs6 ={"转账","红包","公益","保险","信用借还","理财","银行存储","其他"};
+        String[] strs = null;
+        switch (type) {
+            case"餐饮":strs = strs1; break;
+            case"购物":strs = strs2; break;
+            case"生活":strs = strs3; break;
+            case"出行":strs = strs4; break;
+            case"大件":strs = strs5; break;
+            case"其他":strs = strs6; break;
+        }
 
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (String str : strs) {
+            Map<String, Object> map1 = new HashMap<>();
+            Double daySum;
+
+            if (day == -1) {
+                daySum = getDoubSon(year, month, userId, str);
+            } else {
+                daySum = tranMapper.getPieSon(str, year, month, day, userId);
+            }
+            if (daySum == null) {
+                daySum = 0.0;
+            }
+            map1.put("name", str);
+            map1.put("value", daySum);
+            list.add(map1);
+        }
+        return list;
+    }
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }
@@ -108,6 +140,18 @@ public class TranService {
         Double sum = 0.0;
         for (int i = 1; i < 31; i++) {
             Double pie = tranMapper.getPie(type, year, month, i, userId);
+            if (pie == null) {
+                pie = 0.0;
+            }
+            sum += pie;
+        }
+        return sum;
+    }
+
+    public double getDoubSon(int year, int month, int userId, String type) {
+        Double sum = 0.0;
+        for (int i = 1; i < 31; i++) {
+            Double pie = tranMapper.getPieSon(type, year, month, i, userId);
             if (pie == null) {
                 pie = 0.0;
             }
