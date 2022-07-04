@@ -5,7 +5,10 @@ import com.web.account.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author aptx
@@ -30,8 +33,8 @@ public class TranService {
     }
 
 
-    public List<Transaction> getTran(Transaction transaction,int tp) {
-        return tranMapper.getTran(transaction,tp);
+    public List<Transaction> getTran(Transaction transaction, int tp) {
+        return tranMapper.getTran(transaction, tp);
     }
 
     public int addTran(Transaction transaction) {
@@ -39,17 +42,36 @@ public class TranService {
         return transaction.getId();
     }
 
-    public double sumin(double in){
+    public double sumin(double in) {
         return tranMapper.sumin(in);
     }
-    public double sumout(double out){
+
+    public double sumout(double out) {
         return tranMapper.sumout(out);
+    }
+
+    public Map<String, Object> getDaySum(int year, int month, int userId) {
+        Map<String, Object> map = new HashMap<>();
+        List<Double> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 1; i < 31; i++) {
+            Double daySum = tranMapper.getDaySum(year, month, i, userId);
+            if (daySum == null) {
+                daySum = 0.0;
+            }
+            list.add(daySum);
+            list1.add(String.format("%d日", i));
+        }
+        map.put("day", list1);
+        map.put("sum", list);
+        return map;
     }
 
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }
-    public  int updateTran(Transaction transaction){
+
+    public int updateTran(Transaction transaction) {
         return tranMapper.updateTran(transaction);
     }
 }

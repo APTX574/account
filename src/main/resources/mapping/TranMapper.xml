@@ -47,34 +47,75 @@
     </select>
 
     <select id="getTran" resultType="com.web.account.entity.Transaction">
-        select id, user_id, account, type, sort, year, month, day, create_time, beizhu, way, location
+        select id,
+               user_id,
+               account,
+               type,
+               sort,
+               year,
+               month,
+               day,
+               create_time,
+               beizhu,
+               way,
+               location
         from transaction
         where user_id = #{tp}
         order by create_time desc
     </select>
 
     <select id="sumin" resultType="double">
-        select sum(account) from transaction where user_id = 1
+        select sum(account)
+        from transaction
+        where user_id = 1
     </select>
 
     <select id="sumout" resultType="double">
-        select sum(account) from transaction where user_id = 0
+        select sum(account)
+        from transaction
+        where user_id = 0
     </select>
 
     <select id="sumdayout">
-        select day,sum(account) from transaction
-        where user_id = 0 and year = #{year} and month = #{month}
+        select day, sum(account)
+        from transaction
+        where user_id = 0
+          and year = #{year}
+          and month = #{month}
         group by day
     </select>
 
     <select id="deleteTran" resultType="Integer">
-        delete from transaction
+        delete
+        from transaction
         where id = #{id};
     </select>
-    
+    <select id="getDaySum" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+          and month = #{month}
+          and day=#{day}
+            and user_id=#{userId}
+    </select>
+
     <update id="updateTran">
-        update transaction set user_id=#{userId}, account=#{account}, type=#{type}, sort=#{sort}, year=#{year}, month=#{month}, day=#{day}, create_time=#{createTime}, beizhu=#{beizhu}, way=#{way}, location=#{location}
+        update transaction
+        set user_id=#{userId},
+            account=#{account},
+            type=#{type},
+            sort=#{sort},
+            year=#{year},
+            month=#{month},
+            day=#{day},
+            create_time=#{createTime},
+            beizhu=#{beizhu},
+            way=#{way},
+            location=#{location}
         where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="gePie">
+
     </update>
 
 </mapper>

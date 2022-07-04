@@ -4,6 +4,7 @@ import com.web.account.entity.Transaction;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  * @author aptx
@@ -23,7 +24,9 @@ public interface TranMapper {
 
     List<Transaction> getTran(Transaction transaction,int tp);
 
-    double getDaySum(int year,int  month );
+    Double getDaySum(int year,int  month, int day,int userId );
+
+    Double gePie(String type,int year,int month,int day,int userId);
 
     Integer deleteTran(int id);
     int updateTran(Transaction transaction);
