@@ -258,8 +258,8 @@ public class TranController {
         Integer year = jsonObject.getInteger("year");
         Integer month = jsonObject.getInteger("month");
         Integer day = jsonObject.getInteger("day");
-        Map<String, Object> daySum = tranService.getPie(year, month, day,userId);
-        return Result.newSuccessfulResult(daySum);
+        List<Map<String, Object>> pie = tranService.getPie(year, month, day, userId);
+        return Result.newSuccessfulResult(pie);
     }
 
 }

@@ -66,44 +66,35 @@ public class TranService {
         map.put("sum", list);
         return map;
     }
-    public Map<String, Object> getPie(int year,int month,int day,int userId){
-        if(userId == 0) {
-            String[]  strs = {"餐饮消费", "购物消费", "生活消费", "出行消费", "大件消费", "其他消费"};
 
-            Map<String, Object> map = new HashMap<>();
-            List<Double> list = new ArrayList<>();
-            List<String> list1 = new ArrayList<>();
-            for (String str : strs) {
-                Double daySum = tranMapper.getPie(str, year, month, day, userId);
-                if (daySum == null) {
-                    daySum = 0.0;
-                }
-                list.add(daySum);
-                list1.add(str);
-            }
-            map.put("type", list1);
-            map.put("sum", list);
-            return map;
+    public List<Map<String, Object>> getPie(int year, int month, int day, int userId) {
+        String[] strs1 = {"餐饮消费", "购物消费", "生活消费", "出行消费", "大件消费", "其他消费"};
+        String[] strs2 = {"工资", "红包", "借贷", "退款", "转账", "提现", "理财", "其他"};
+        String[] strs;
+        if (userId == 0) {
+            strs = strs1;
+        } else {
+            strs = strs2;
         }
-        else {
-            String[]  strs = {"工资","红包","借贷","退款","转账","提现","理财","其他"};
+        if (day == 0) {
 
-            Map<String, Object> map = new HashMap<>();
-            List<Double> list = new ArrayList<>();
-            List<String> list1 = new ArrayList<>();
-            for (String str : strs) {
-                Double daySum = tranMapper.getPie(str, year, month, day, userId);
-                if (daySum == null) {
-                    daySum = 0.0;
-                }
-                list.add(daySum);
-                list1.add(str);
-            }
-            map.put("type", list1);
-            map.put("sum", list);
-            return map;
         }
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (String str : strs) {
+            Map<String, Object> map1 = new HashMap<>();
+            Double daySum = tranMapper.getPie(str, year, month, day, userId);
+            if (daySum == null) {
+                daySum = 0.0;
+            }
+            map1.put("name", str);
+            map1.put("value", daySum);
+            list.add(map1);
+        }
+        return list;
+
+
     }
+
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }
@@ -111,4 +102,10 @@ public class TranService {
     public int updateTran(Transaction transaction) {
         return tranMapper.updateTran(transaction);
     }
+
+//    public double getDoub(int year, int month, int userId, String type) {
+//        for (int i = 1; i < 31; i++) {
+//            tranMapper.getDaySum()
+//        }
+//    }
 }
