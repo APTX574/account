@@ -162,7 +162,9 @@ public class TranController {
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
+        String sort = jsonObject.getString("sort");
         Date createTime = new Date();
+
         int id = jsonObject.getInteger("id");
         int userID = jsonObject.getInteger("userId");
         Date date = jsonObject.getDate("time");
@@ -189,7 +191,7 @@ public class TranController {
         newtrans.setDay(day);
         newtrans.setUserId(userID);
         newtrans.setId(id);
-
+        newtrans.setSort(sort);
         int result = tranService.updateTran(newtrans);
         return Result.newSuccessfulResult("更新成功");
     }
