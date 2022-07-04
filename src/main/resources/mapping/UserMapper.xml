@@ -15,5 +15,10 @@
         from user
         where username = #{username}
     </select>
-
+    <update id="monthlimit">
+        update user set month_limit=#{monthlimit}
+    </update>
+    <update id="yearlimit">
+        update user set year_limit=#{yearlimit}
+    </update>
 </mapper>

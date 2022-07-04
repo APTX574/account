@@ -114,6 +114,27 @@
           and day=#{day}
             and user_id=#{userId}
     </select>
+    <select id="getNowDaySum" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+          and month = #{month}
+          and day=#{day}
+          and user_id=#{userId}
+    </select>
+    <select id="getNowMonthSum" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+          and month = #{month}
+            and user_id=#{userId}
+    </select>
+    <select id="getNowYearSum" resultType="java.lang.Double">
+        select sum(account)
+        from transaction
+        where year = #{year}
+            and user_id=#{userId}
+    </select>
     <select id="getPie" resultType="java.lang.Double">
         select sum(account)
         from transaction
@@ -151,6 +172,5 @@
             location=#{location}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
 
 </mapper>

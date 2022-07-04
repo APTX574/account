@@ -169,7 +169,6 @@ public class TranController {
     @ResponseBody
     public String update(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
-        System.out.println(body);
 
         double account = jsonObject.getDouble("account");
         String type = jsonObject.getString("type");
@@ -180,7 +179,7 @@ public class TranController {
         Date createTime = new Date();
         int id = jsonObject.getInteger("id");
         int userID = jsonObject.getInteger("userId");
-        Date date = jsonObject.getDate("time");
+        Date date = jsonObject.getDate("createTime");
         if (date == null) {
             date = new Date();
         }
@@ -214,14 +213,12 @@ public class TranController {
     @ResponseBody
     public String getTranByMonth(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
-        System.out.println(body);
 
         double account = jsonObject.getDouble("account");
         String type = jsonObject.getString("type");
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
-        Date createTime = new Date();
         int id = jsonObject.getInteger("id");
         int userID = jsonObject.getInteger("userId");
         Date date = jsonObject.getDate("time");
@@ -234,8 +231,6 @@ public class TranController {
         int year = Integer.parseInt(split[0]);
         int month = Integer.parseInt(split[1]);
         int day = Integer.parseInt(split[2]);
-
-
         Transaction newtrans = new Transaction();
         newtrans.setAccount(account);
         newtrans.setType(type);
@@ -257,7 +252,7 @@ public class TranController {
     @ResponseBody
     public String getDaySum(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
-        System.out.println(body);
+
         Integer userId = jsonObject.getInteger("userId");
         Integer year = jsonObject.getInteger("year");
         Integer month = jsonObject.getInteger("month");
@@ -290,4 +285,65 @@ public class TranController {
         return Result.newSuccessfulResult(pie);
     }
 
+
+    @RequestMapping(value = "/get/nowdaysum", method = RequestMethod.POST)
+    @ResponseBody
+    public String nowdaysum() {
+        Date date = new Date();
+        DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        String format = bf.format(date);
+        String[] split = format.split("-");
+        int year = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map.put("value", String.format("%.2f", tranService.nowDaySum(year,month,day,0)));
+        map.put("name", "支出总金额");
+        map1.put("value", String.format("%.2f", tranService.nowDaySum(year,month,day,1)));
+        map1.put("name", "收入总金额");
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return Result.newSuccessfulResult(list);
+    }
+    @RequestMapping(value = "/get/nowmonthsum", method = RequestMethod.POST)
+    @ResponseBody
+    public String nowmonthsum() {
+        Date date = new Date();
+        DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        String format = bf.format(date);
+        String[] split = format.split("-");
+        int year = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map.put("value", String.format("%.2f", tranService.nowMonthSum(year,month,0)));
+        map.put("name", "支出总金额");
+        map1.put("value", String.format("%.2f", tranService.nowMonthSum(year,month,1)));
+        map1.put("name", "收入总金额");
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return Result.newSuccessfulResult(list);
+    }
+    @RequestMapping(value = "/get/nowyearsum", method = RequestMethod.POST)
+    @ResponseBody
+    public String nowyearsum() {
+        Date date = new Date();
+        DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        String format = bf.format(date);
+        String[] split = format.split("-");
+        int year = Integer.parseInt(split[0]);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map.put("value", String.format("%.2f", tranService.nowYearSum(year,0)));
+        map.put("name", "支出总金额");
+        map1.put("value", String.format("%.2f", tranService.nowYearSum(year,1)));
+        map1.put("name", "收入总金额");
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return Result.newSuccessfulResult(list);
+    }
 }
