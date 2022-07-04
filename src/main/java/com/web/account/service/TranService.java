@@ -3,13 +3,9 @@ package com.web.account.service;
 import com.web.account.dao.TranMapper;
 import com.web.account.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author aptx
@@ -33,8 +29,9 @@ public class TranService {
         return tranMapper.getTranByYear(year, type, sort);
     }
 
-    public List<Transaction> getTran(Transaction transaction, int tp) {
-        return tranMapper.getTran(transaction, tp);
+
+    public List<Transaction> getTran(Transaction transaction,int tp) {
+        return tranMapper.getTran(transaction,tp);
     }
 
     public int addTran(Transaction transaction) {
@@ -42,34 +39,17 @@ public class TranService {
         return transaction.getId();
     }
 
-    public Map<String, Object> getMonthSum(int year, int month) {
-        Map<String, Object> map = new HashMap<>();
-        List<Double> list = new ArrayList<>();
-        List<String> list2 = new ArrayList<>();
-        for (int i = 1; i < 31; i++) {
-            double daySum = tranMapper.getDaySum(year, month);
-            list.add(daySum);
-            list2.add(String.format("%d日", i));
-        }
-        map.put("sum", list);
-        map.put("month", list2);
-
-        return map;
-    }
-
-    public double sumin(double in) {
+    public double sumin(double in){
         return tranMapper.sumin(in);
     }
-
-    public double sumout(double out) {
+    public double sumout(double out){
         return tranMapper.sumout(out);
     }
 
     public Integer deleteTran(int id) {
         return tranMapper.deleteTran(id);
     }
-
-    public int updateTran(Transaction transaction) {
+    public  int updateTran(Transaction transaction){
         return tranMapper.updateTran(transaction);
     }
 }
