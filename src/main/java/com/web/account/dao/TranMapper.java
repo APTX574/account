@@ -23,6 +23,8 @@ public interface TranMapper {
 
     List<Transaction> getTran(Transaction transaction,int tp);
 
+    double getDaySum(int year,int  month );
+
     Integer deleteTran(int id);
     int updateTran(Transaction transaction);
     double sumin(double in);

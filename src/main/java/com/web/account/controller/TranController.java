@@ -5,7 +5,6 @@ import com.web.account.entity.Result;
 import com.web.account.entity.Transaction;
 import com.web.account.service.TranService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +25,7 @@ public class TranController {
 
     @RequestMapping(value = "/insert/outcome", method = RequestMethod.POST)
     @ResponseBody
+    @CrossOrigin
     public String insertoutcome(@RequestBody String body) {
 
         JSONObject jsonObject = JSONObject.parseObject(body);
@@ -129,10 +129,10 @@ public class TranController {
     public String sumin() {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> map1 = new HashMap<>();
-        map.put("value", String.format("%.2f",tranService.sumout(0)));
-        map.put("name","支出总金额");
-        map1.put("value", String.format("%.2f",tranService.sumin(1)));
-        map1.put("name","收入总金额");
+        map.put("value", String.format("%.2f", tranService.sumout(0)));
+        map.put("name", "支出总金额");
+        map1.put("value", String.format("%.2f", tranService.sumin(1)));
+        map1.put("name", "收入总金额");
         List<Map<String, Object>> list = new ArrayList<>();
         list.add(map);
         list.add(map1);
@@ -140,7 +140,7 @@ public class TranController {
 
     }
 
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(@RequestBody String str) {
         JSONObject jsonObject = JSONObject.parseObject(str);
@@ -151,7 +151,19 @@ public class TranController {
         return Result.newSuccessfulResult("success");
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @RequestMapping(value = "/get/day/sum", method = RequestMethod.POST)
+    @ResponseBody
+    public String getDaySum(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        System.out.println(body);
+        Integer year = jsonObject.getInteger("year");
+        Integer month = jsonObject.getInteger("month");
+
+        Map<String, Object> monthSum = tranService.getMonthSum(year, month);
+        return Result.newSuccessfulResult(monthSum);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public String update(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
@@ -166,7 +178,7 @@ public class TranController {
         int id = jsonObject.getInteger("id");
         int userID = jsonObject.getInteger("userId");
         Date date = jsonObject.getDate("time");
-        if (date == null){
+        if (date == null) {
             date = new Date();
         }
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
@@ -193,5 +205,6 @@ public class TranController {
         int result = tranService.updateTran(newtrans);
         return Result.newSuccessfulResult("更新成功");
     }
+
 
 }
