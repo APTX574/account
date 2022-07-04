@@ -6,6 +6,7 @@ import com.web.account.entity.Result;
 import com.web.account.entity.Transaction;
 import com.web.account.service.TranService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +53,6 @@ public class TranController {
         Date createTime = new Date();
 
         Date date = jsonObject.getDate("time");
-        System.out.println(date);
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
         String[] split = format.split("-");
@@ -91,6 +91,7 @@ public class TranController {
         String beizhu = jsonObject.getString("beizhu");
         String location = jsonObject.getString("location");
         String way = jsonObject.getString("way");
+        Date createTime = new Date();
 
         Date date = jsonObject.getDate("time");
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
@@ -168,6 +169,7 @@ public class TranController {
     @ResponseBody
     public String update(@RequestBody String body) {
         JSONObject jsonObject = JSONObject.parseObject(body);
+        System.out.println(body);
 
         double account = jsonObject.getDouble("account");
         String type = jsonObject.getString("type");
