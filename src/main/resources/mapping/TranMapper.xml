@@ -108,6 +108,7 @@
             and type = #{type}
     </select>
 
+
     <update id="updateTran">
         update transaction
         set user_id=#{userId},

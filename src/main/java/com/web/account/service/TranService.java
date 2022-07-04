@@ -5,10 +5,7 @@ import com.web.account.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author aptx
@@ -68,7 +65,7 @@ public class TranService {
     }
 
     public List<Map<String, Object>> getPie(int year, int month, int day, int userId) {
-        String[] strs1 = {"餐饮消费", "购物消费", "生活消费", "出行消费", "大件消费", "其他消费"};
+        String[] strs1 = {"餐饮", "购物", "生活", "出行", "大件", "其他"};
         String[] strs2 = {"工资", "红包", "借贷", "退款", "转账", "提现", "理财", "其他"};
         String[] strs;
         if (userId == 0) {
@@ -76,13 +73,17 @@ public class TranService {
         } else {
             strs = strs2;
         }
-        if (day == 0) {
-
-        }
+        System.out.println(Arrays.toString(strs));
         List<Map<String, Object>> list = new ArrayList<>();
         for (String str : strs) {
             Map<String, Object> map1 = new HashMap<>();
-            Double daySum = tranMapper.getPie(str, year, month, day, userId);
+            Double daySum;
+
+            if (day == -1) {
+                daySum = getDoub(year, month, userId, str);
+            } else {
+                daySum = tranMapper.getPie(str, year, month, day, userId);
+            }
             if (daySum == null) {
                 daySum = 0.0;
             }
@@ -103,9 +104,15 @@ public class TranService {
         return tranMapper.updateTran(transaction);
     }
 
-//    public double getDoub(int year, int month, int userId, String type) {
-//        for (int i = 1; i < 31; i++) {
-//            tranMapper.getDaySum()
-//        }
-//    }
+    public double getDoub(int year, int month, int userId, String type) {
+        Double sum = 0.0;
+        for (int i = 1; i < 31; i++) {
+            Double pie = tranMapper.getPie(type, year, month, i, userId);
+            if (pie == null) {
+                pie = 0.0;
+            }
+            sum += pie;
+        }
+        return sum;
+    }
 }
