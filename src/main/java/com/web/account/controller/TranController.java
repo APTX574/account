@@ -194,4 +194,47 @@ public class TranController {
         return Result.newSuccessfulResult("更新成功");
     }
 
+    @RequestMapping(value = "/getTranByMonth",method = RequestMethod.POST)
+    @ResponseBody
+    public String getTranByMonth(@RequestBody String body) {
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        System.out.println(body);
+
+        double account = jsonObject.getDouble("account");
+        String type = jsonObject.getString("type");
+        String beizhu = jsonObject.getString("beizhu");
+        String location = jsonObject.getString("location");
+        String way = jsonObject.getString("way");
+        Date createTime = new Date();
+        int id = jsonObject.getInteger("id");
+        int userID = jsonObject.getInteger("userId");
+        Date date = jsonObject.getDate("time");
+        if (date == null){
+            date = new Date();
+        }
+        DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        String format = bf.format(date);
+        String[] split = format.split("-");
+        int year = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
+
+
+        Transaction newtrans = new Transaction();
+        newtrans.setAccount(account);
+        newtrans.setType(type);
+        newtrans.setLocation(location);
+        newtrans.setWay(way);
+        newtrans.setBeizhu(beizhu);
+        newtrans.setCreateTime(createTime);
+        newtrans.setYear(year);
+        newtrans.setMonth(month);
+        newtrans.setDay(day);
+        newtrans.setUserId(userID);
+        newtrans.setId(id);
+
+        int result = tranService.updateTran(newtrans);
+        return Result.newSuccessfulResult("更新成功");
+    }
+
 }

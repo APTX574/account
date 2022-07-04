@@ -54,12 +54,16 @@
 
     <select id="sumin" resultType="double">
         select sum(account) from transaction where user_id = 1
-
     </select>
 
     <select id="sumout" resultType="double">
         select sum(account) from transaction where user_id = 0
+    </select>
 
+    <select id="sumdayout">
+        select day,sum(account) from transaction
+        where user_id = 0 and year = #{year} and month = #{month}
+        group by day
     </select>
 
     <select id="deleteTran" resultType="Integer">
