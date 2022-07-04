@@ -10,12 +10,32 @@ import java.util.Objects;
 public class User {
     int id;
     String username;
+    double monthlimit;
+    double yearlimit;
+
+    public double getMonthlimit() {
+        return monthlimit;
+    }
+
+    public void setMonthlimit(double monthlimit) {
+        this.monthlimit = monthlimit;
+    }
+
+    public double getYearlimit() {
+        return yearlimit;
+    }
+
+    public void setYearlimit(double yearlimit) {
+        this.yearlimit = yearlimit;
+    }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", monthlimit=" + monthlimit +
+                ", yearlimit=" + yearlimit +
                 ", balance=" + balance +
                 ", password='" + password + '\'' +
                 '}';

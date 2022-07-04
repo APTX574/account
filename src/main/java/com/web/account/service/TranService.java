@@ -19,15 +19,15 @@ public class TranService {
     @Autowired
     TranMapper tranMapper;
 
-    List<Transaction> getTranByDate(int year, int month, int day, String type, String sort) {
+    List<Transaction> getTranByMonth(int year, int month, int day, String type, String sort) {
         return tranMapper.getTranByDay(year, month, day, type, sort);
     }
 
-    List<Transaction> getTranByDate(int year, int month, String type, String sort) {
+    List<Transaction> getTranByMonth(int year, int month, String type, String sort) {
         return tranMapper.getTranByMonth(year, month, type, sort);
     }
 
-    List<Transaction> getTranByDate(int year, String type, String sort) {
+    List<Transaction> getTranByDay(int year, String type, String sort) {
         return tranMapper.getTranByYear(year, type, sort);
     }
 
@@ -51,6 +51,15 @@ public class TranService {
 
     public double sumout(double out) {
         return tranMapper.sumout(out);
+    }
+    public double nowDaySum(int year,int  month, int day,int userId) {
+        return tranMapper.getNowDaySum(year,month, day,userId);
+    }
+    public double nowMonthSum(int year,int  month, int userId) {
+        return tranMapper.getNowMonthSum(year,month,userId);
+    }
+    public double nowYearSum(int year, int userId) {
+        return tranMapper.getNowYearSum(year,userId);
     }
 
     public Map<String, Object> getDaySum(int year, int month, int userId) {
