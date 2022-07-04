@@ -21,4 +21,10 @@
     <update id="yearlimit">
         update user set year_limit=#{yearlimit}
     </update>
+    <select id="getmonthlimit" resultType="double">
+        select month_limit from user where id = 1
+    </select>
+    <select id="getyearlimit" resultType="double">
+        select year_limit from user where id = 1
+    </select>
 </mapper>

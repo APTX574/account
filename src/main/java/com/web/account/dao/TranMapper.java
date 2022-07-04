@@ -31,6 +31,7 @@ public interface TranMapper {
     Double getNowMonthSum(int year,int  month,int userId);
     Double getNowYearSum(int year,int userId);
 
+
     Double getPie(String type,int year,int month,int day,int userId);
     Double getPieSon(String type,int year,int month,int day,int userId,String sort);
 

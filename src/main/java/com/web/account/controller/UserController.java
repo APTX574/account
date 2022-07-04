@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,8 +69,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/leftmonthlimit")
     public String leftmonthlimit() {
-        User user = new User();
-        double monthlimit = user.getMonthlimit();
+
+        double monthlimit = userMapper.getmonthlimit();
         Date date = new Date();
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
@@ -81,8 +82,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/leftyearlimit")
     public String leftyearlimit() {
-        User user = new User();
-        double yearlimit = user.getYearlimit();
+        double yearlimit = userMapper.getyearlimit();
         Date date = new Date();
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);

@@ -15,4 +15,6 @@ public interface UserMapper {
     double monthlimit(double ml);
     double yearlimit(double ml);
 
+    Double getyearlimit();
+    Double getmonthlimit();
 }
