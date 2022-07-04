@@ -67,7 +67,9 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/leftmonthlimit")
-    public String leftmonthlimit(@RequestBody double monthlimit) {
+    public String leftmonthlimit() {
+        User user = new User();
+        double monthlimit = user.getMonthlimit();
         Date date = new Date();
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
@@ -78,7 +80,9 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, path = "/leftyearlimit")
-    public String leftyearlimit(@RequestBody double yearlimit) {
+    public String leftyearlimit() {
+        User user = new User();
+        double yearlimit = user.getYearlimit();
         Date date = new Date();
         DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
         String format = bf.format(date);
